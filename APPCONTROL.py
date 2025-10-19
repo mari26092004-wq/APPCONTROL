@@ -49,10 +49,10 @@ CONTROL_CHART_CONSTANTS = {
     25: {'A2': 0.153, 'D3': 0.459, 'D4': 1.541, 'd2': 3.931, 'A3': 0.606, 'B3': 0.565, 'B4': 1.435, 'c4': 0.9896}
 }
 
-# 🖼️ Logos - Actualizado para usar carpeta assets
-logo_unimag = 'assets/logo_unimag.png'
-logo_ing = 'assets/logo_ing_industrial.png'
-logo_brainystats = 'assets/logo_brainystats.png'
+# 🖼️ Logos
+logo_unimag = 'logo_unimag.png'
+logo_ing = 'logo_ing_industrial.png'
+logo_brainystats = 'logo_brainystats.png'
 
 def encode_image(image_file):
     if not os.path.exists(image_file):
@@ -142,8 +142,8 @@ app.layout = html.Div(style={
                 }),
             ]),
             
-            # Logo derecha - CORREGIDO: quitado el filtro que volvía blanco el logo
-            html.Img(src=logo_ing_base64, style={'height': '80px'}) if logo_ing_base64 else html.Div(),
+            # Logo derecha
+            html.Img(src=logo_ing_base64, style={'height': '80px', 'filter': 'brightness(0) invert(1)'}) if logo_ing_base64 else html.Div(),
         ])
     ]),
 
