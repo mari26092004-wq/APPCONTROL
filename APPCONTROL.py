@@ -426,7 +426,7 @@ app.layout = html.Div(style={
     ])
 ])
 
-# Callbacks (mantienen la lógica original)
+# Callbacks
 @app.callback(
     Output('manual-table', 'columns'),
     Output('manual-table', 'data'),
@@ -750,8 +750,12 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
         margin=dict(l=70, r=70, t=90, b=70)
     )
 
-    # Análisis
-    num_fuera_control = len(fuera_control_x)
+    # Análisis completo de control - CORREGIDO
+    if chart_type == 'XR':
+        num_fuera_control = len(fuera_control_x) + len(fuera_control_r)
+    else:
+        num_fuera_control = len(fuera_control_x) + len(fuera_control_s)
+    
     violaciones_patrones = detectar_patrones_western_electric(means, UCLx, LCLx, CLx)
     
     # Alerta principal profesional
@@ -949,11 +953,26 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
             ]),
             
             html.Div([
-                html.Ul([
-                    html.Li(f"Subgrupo {i+1}: X̄ = {means[i]:.4f}", 
-                           style={'color': colors['text_primary'], 'marginBottom': '8px', 'fontSize': '14px', 'fontWeight': '500'}) 
-                    for i in fuera_control_x
-                ], style={'paddingLeft': '20px', 'margin': '0'}) if num_fuera_control > 0 
+                html.Div([
+                    html.Div([
+                        html.Div("Gráfico X̄:", style={'fontWeight': '700', 'marginBottom': '10px', 'color': colors['chart_line1']}),
+                        html.Ul([
+                            html.Li(f"Subgrupo {i+1}: X̄ = {means[i]:.4f}", 
+                                   style={'color': colors['text_primary'], 'marginBottom': '5px', 'fontSize': '14px', 'fontWeight': '500'}) 
+                            for i in fuera_control_x
+                        ], style={'paddingLeft': '20px', 'margin': '0'}) if len(fuera_control_x) > 0 
+                        else html.P("Ningún punto fuera de control", style={'color': colors['success'], 'fontWeight': '500', 'fontSize': '14px', 'margin': '0', 'paddingLeft': '20px'})
+                    ], style={'marginBottom': '15px'}),
+                    html.Div([
+                        html.Div(f"Gráfico {'R' if chart_type == 'XR' else 'S'}:", style={'fontWeight': '700', 'marginBottom': '10px', 'color': colors['chart_line2']}),
+                        html.Ul([
+                            html.Li(f"Subgrupo {i+1}: {'R' if chart_type == 'XR' else 'S'} = {(ranges[i] if chart_type == 'XR' else stds[i]):.4f}", 
+                                   style={'color': colors['text_primary'], 'marginBottom': '5px', 'fontSize': '14px', 'fontWeight': '500'}) 
+                            for i in (fuera_control_r if chart_type == 'XR' else fuera_control_s)
+                        ], style={'paddingLeft': '20px', 'margin': '0'}) if len(fuera_control_r if chart_type == 'XR' else fuera_control_s) > 0 
+                        else html.P("Ningún punto fuera de control", style={'color': colors['success'], 'fontWeight': '500', 'fontSize': '14px', 'margin': '0', 'paddingLeft': '20px'})
+                    ])
+                ]) if num_fuera_control > 0 
                 else html.P("Todos los puntos dentro de los límites de control", 
                            style={'color': colors['success'], 'fontWeight': '600', 'fontSize': '15px', 'margin': '0'})
             ], style={'padding': '20px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px', 'marginBottom': '30px'})
