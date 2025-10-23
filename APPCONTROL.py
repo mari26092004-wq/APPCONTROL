@@ -10,25 +10,25 @@ import os
 app = dash.Dash(__name__)
 app.title = "BrainyStats - Gráficos de Control"
 
-# 🎨 Paleta de colores profesional basada en la imagen
+# 🎨 Paleta de colores profesional
 colors = {
-    'bg_primary': '#0A2540',        # Azul marino profundo
-    'bg_secondary': '#0D3A5F',      # Azul intermedio
-    'bg_card': '#FFFFFF',           # Blanco puro
-    'accent_gold': '#D4AF37',       # Oro elegante
-    'accent_gold_light': '#F4E5C3', # Oro claro
-    'green_primary': '#1B5E20',     # Verde bosque
-    'green_secondary': '#2E7D32',   # Verde medio
-    'text_primary': '#1A1A1A',      # Negro suave
-    'text_secondary': '#546E7A',    # Gris azulado
-    'text_light': '#FFFFFF',        # Blanco
-    'success': '#4CAF50',           # Verde éxito
-    'warning': '#FF9800',           # Naranja advertencia
-    'danger': '#E53935',            # Rojo peligro
-    'chart_line1': '#2196F3',       # Azul vibrante
-    'chart_line2': '#FF6F00',       # Naranja vibrante
-    'border': '#E0E0E0',            # Gris claro
-    'shadow': 'rgba(0, 0, 0, 0.15)' # Sombra suave
+    'bg_primary': '#0A2540',
+    'bg_secondary': '#0D3A5F',
+    'bg_card': '#FFFFFF',
+    'accent_gold': '#D4AF37',
+    'accent_gold_light': '#F4E5C3',
+    'green_primary': '#1B5E20',
+    'green_secondary': '#2E7D32',
+    'text_primary': '#1A1A1A',
+    'text_secondary': '#546E7A',
+    'text_light': '#FFFFFF',
+    'success': '#4CAF50',
+    'warning': '#FF9800',
+    'danger': '#E53935',
+    'chart_line1': '#2196F3',
+    'chart_line2': '#FF6F00',
+    'border': '#E0E0E0',
+    'shadow': 'rgba(0, 0, 0, 0.15)'
 }
 
 # 📊 Constantes de gráficos de control
@@ -64,7 +64,7 @@ logo_unimag_base64 = encode_image(logo_unimag)
 logo_ing_base64 = encode_image(logo_ing)
 logo_brainystats_base64 = encode_image(logo_brainystats)
 
-# 🌐 Layout principal con diseño profesional
+# 🌐 Layout principal
 app.layout = html.Div(style={
     'background': f'linear-gradient(180deg, {colors["bg_primary"]} 0%, {colors["bg_secondary"]} 100%)',
     'minHeight': '100vh',
@@ -72,7 +72,7 @@ app.layout = html.Div(style={
     'fontFamily': "'Inter', 'Segoe UI', 'Roboto', sans-serif"
 }, children=[
 
-    # 🔹 Header profesional con onda dorada
+    # Header
     html.Div(style={
         'position': 'relative',
         'background': f'linear-gradient(135deg, {colors["bg_primary"]} 0%, {colors["bg_secondary"]} 100%)',
@@ -84,7 +84,6 @@ app.layout = html.Div(style={
         'borderBottom': f'4px solid {colors["accent_gold"]}',
         'boxShadow': f'0 4px 20px {colors["shadow"]}'
     }, children=[
-        # Decoración onda superior (verde)
         html.Div(style={
             'position': 'absolute',
             'top': '0',
@@ -103,13 +102,11 @@ app.layout = html.Div(style={
             'maxWidth': '1400px',
             'margin': '0 auto'
         }, children=[
-            # Logos izquierda
             html.Div(style={'display': 'flex', 'gap': '20px', 'alignItems': 'center'}, children=[
                 html.Img(src=logo_unimag_base64, style={'height': '80px'}) if logo_unimag_base64 else html.Div(),
                 html.Img(src=logo_brainystats_base64, style={'height': '80px'}) if logo_brainystats_base64 else html.Div(),
             ]),
             
-            # Título central profesional
             html.Div(style={'flex': '1', 'textAlign': 'center'}, children=[
                 html.H1("Gráficos de Control", style={
                     'color': colors['text_light'],
@@ -142,15 +139,14 @@ app.layout = html.Div(style={
                 }),
             ]),
             
-            # Logo derecha
             html.Img(src=logo_ing_base64, style={'height': '80px', 'filter': 'brightness(0) invert(1)'}) if logo_ing_base64 else html.Div(),
         ])
     ]),
 
-    # Contenedor principal con padding
+    # Contenedor principal
     html.Div(style={'padding': '40px', 'maxWidth': '1400px', 'margin': '0 auto'}, children=[
         
-        # 🔸 Panel de configuración profesional
+        # Panel de configuración
         html.Div(style={
             'backgroundColor': colors['bg_card'],
             'borderRadius': '12px',
@@ -198,7 +194,7 @@ app.layout = html.Div(style={
                 }
             ),
 
-            # 🔸 Upload profesional
+            # Upload
             html.Div(id='upload-div', children=[
                 dcc.Upload(
                     id='upload-data',
@@ -241,10 +237,40 @@ app.layout = html.Div(style={
                     },
                     multiple=False
                 ),
+                
+                # 📝 Instrucciones de formato
+                html.Div(style={
+                    'marginTop': '20px',
+                    'padding': '20px',
+                    'backgroundColor': '#F0F7FF',
+                    'borderRadius': '8px',
+                    'border': '1px solid #BBDEFB'
+                }, children=[
+                    html.Div("📋 Formato del archivo:", style={
+                        'fontWeight': '700',
+                        'fontSize': '14px',
+                        'color': colors['text_primary'],
+                        'marginBottom': '12px',
+                        'textTransform': 'uppercase',
+                        'letterSpacing': '0.5px'
+                    }),
+                    html.Ul([
+                        html.Li("Cada COLUMNA representa una medición (x1, x2, x3, ...)", style={'marginBottom': '8px', 'fontSize': '13px'}),
+                        html.Li("Cada FILA representa un subgrupo/muestra", style={'marginBottom': '8px', 'fontSize': '13px'}),
+                        html.Li("NO incluir encabezados ni nombres de columnas", style={'marginBottom': '8px', 'fontSize': '13px', 'fontWeight': '600'}),
+                        html.Li("Solo valores numéricos", style={'fontSize': '13px'}),
+                    ], style={'paddingLeft': '20px', 'margin': '0', 'color': colors['text_primary']}),
+                    html.Div(style={'marginTop': '15px', 'padding': '12px', 'backgroundColor': 'white', 'borderRadius': '6px', 'fontFamily': 'monospace', 'fontSize': '12px'}, children=[
+                        html.Div("Ejemplo CSV:", style={'fontWeight': '700', 'marginBottom': '8px', 'color': colors['text_primary']}),
+                        html.Pre("10.2,10.1,10.3,10.0,10.2\n10.3,10.2,10.4,10.1,10.3\n10.1,10.0,10.2,10.1,10.1", 
+                                style={'margin': '0', 'color': '#1565C0'})
+                    ])
+                ]),
+                
                 html.Div(id='output-data-upload', style={'marginTop': '20px'})
             ]),
 
-            # 🔸 Manual profesional
+            # Manual
             html.Div(id='manual-div', style={'display': 'none'}, children=[
                 html.Div([
                     html.Label("Número de mediciones por subgrupo", style={
@@ -337,65 +363,102 @@ app.layout = html.Div(style={
                 })
             ]),
 
-            # Configuración de gráficos
-            html.Div(style={'marginTop': '40px', 'display': 'grid', 'gridTemplateColumns': '1fr 1fr', 'gap': '25px'}, children=[
-                html.Div([
-                    html.Label("Tipo de gráfico", style={
-                        'color': colors['text_primary'],
-                        'fontSize': '15px',
-                        'fontWeight': '600',
-                        'marginBottom': '12px',
-                        'display': 'block',
-                        'textTransform': 'uppercase',
-                        'letterSpacing': '0.5px'
-                    }),
-                    dcc.Dropdown(
-                        id='chart-type',
-                        options=[
-                            {'label': 'X̄-R (Promedio y Rango)', 'value': 'XR'},
-                            {'label': 'X̄-S (Promedio y Desviación)', 'value': 'XS'}
-                        ],
-                        value='XR',
-                        style={
-                            'backgroundColor': colors['bg_card'],
-                            'borderRadius': '6px',
-                            'fontWeight': '500'
-                        }
-                    ),
-                ]),
-                
-                html.Div([
-                    html.Label("Nivel de significancia (α)", style={
-                        'color': colors['text_primary'],
-                        'fontSize': '15px',
-                        'fontWeight': '600',
-                        'marginBottom': '12px',
-                        'display': 'block',
-                        'textTransform': 'uppercase',
-                        'letterSpacing': '0.5px'
-                    }),
-                    dcc.Input(
-                        id='alpha',
-                        type='number',
-                        value=0.0027,
-                        min=0.001,
-                        max=0.1,
-                        step=0.0001,
-                        style={
-                            'width': '100%',
-                            'padding': '12px',
-                            'borderRadius': '6px',
-                            'border': f'1px solid {colors["border"]}',
-                            'background': colors['bg_card'],
+            # Límites de Especificación (USL/LSL)
+            html.Div(style={'marginTop': '30px', 'padding': '25px', 'backgroundColor': '#F5F5F5', 'borderRadius': '8px', 'border': f'1px solid {colors["border"]}'}, children=[
+                html.Label("Límites de Especificación (Opcionales)", style={
+                    'color': colors['text_primary'],
+                    'fontSize': '15px',
+                    'fontWeight': '600',
+                    'marginBottom': '15px',
+                    'display': 'block',
+                    'textTransform': 'uppercase',
+                    'letterSpacing': '0.5px'
+                }),
+                html.P("Para calcular Cpk y Ppk, ingresa los límites de especificación de tu proceso", style={
+                    'fontSize': '13px',
+                    'color': colors['text_secondary'],
+                    'marginBottom': '15px',
+                    'fontWeight': '500'
+                }),
+                html.Div(style={'display': 'grid', 'gridTemplateColumns': '1fr 1fr', 'gap': '20px'}, children=[
+                    html.Div([
+                        html.Label("USL (Upper Specification Limit)", style={
+                            'fontSize': '13px',
+                            'fontWeight': '600',
                             'color': colors['text_primary'],
-                            'fontSize': '15px',
-                            'fontWeight': '500'
-                        }
-                    ),
-                ]),
+                            'marginBottom': '8px',
+                            'display': 'block'
+                        }),
+                        dcc.Input(
+                            id='usl-input',
+                            type='number',
+                            placeholder='Ej: 105.5',
+                            style={
+                                'width': '100%',
+                                'padding': '12px',
+                                'borderRadius': '6px',
+                                'border': f'1px solid {colors["border"]}',
+                                'background': colors['bg_card'],
+                                'color': colors['text_primary'],
+                                'fontSize': '14px',
+                                'fontWeight': '500'
+                            }
+                        )
+                    ]),
+                    html.Div([
+                        html.Label("LSL (Lower Specification Limit)", style={
+                            'fontSize': '13px',
+                            'fontWeight': '600',
+                            'color': colors['text_primary'],
+                            'marginBottom': '8px',
+                            'display': 'block'
+                        }),
+                        dcc.Input(
+                            id='lsl-input',
+                            type='number',
+                            placeholder='Ej: 94.5',
+                            style={
+                                'width': '100%',
+                                'padding': '12px',
+                                'borderRadius': '6px',
+                                'border': f'1px solid {colors["border"]}',
+                                'background': colors['bg_card'],
+                                'color': colors['text_primary'],
+                                'fontSize': '14px',
+                                'fontWeight': '500'
+                            }
+                        )
+                    ])
+                ])
             ]),
 
-            # Botón generar profesional
+            # Tipo de gráfico
+            html.Div(style={'marginTop': '30px'}, children=[
+                html.Label("Tipo de gráfico", style={
+                    'color': colors['text_primary'],
+                    'fontSize': '15px',
+                    'fontWeight': '600',
+                    'marginBottom': '12px',
+                    'display': 'block',
+                    'textTransform': 'uppercase',
+                    'letterSpacing': '0.5px'
+                }),
+                dcc.Dropdown(
+                    id='chart-type',
+                    options=[
+                        {'label': 'X̄-R (Promedio y Rango)', 'value': 'XR'},
+                        {'label': 'X̄-S (Promedio y Desviación)', 'value': 'XS'}
+                    ],
+                    value='XR',
+                    style={
+                        'backgroundColor': colors['bg_card'],
+                        'borderRadius': '6px',
+                        'fontWeight': '500'
+                    }
+                ),
+            ]),
+
+            # Botón generar
             html.Button('Generar Análisis', id='generate-button', n_clicks=0, style={
                 'marginTop': '35px',
                 'width': '100%',
@@ -414,7 +477,7 @@ app.layout = html.Div(style={
             }),
         ]),
 
-        # 🔸 Área de resultados
+        # Área de resultados
         html.Div(id='results-area', style={'display': 'none'}, children=[
             html.Div(id='alerta-principal'),
             html.Div(id='estadisticas-proceso'),
@@ -477,9 +540,9 @@ def parse_contents(contents, filename):
     decoded = base64.b64decode(content_string)
     try:
         if 'csv' in filename.lower():
-            df = pd.read_csv(io.StringIO(decoded.decode('utf-8')))
+            df = pd.read_csv(io.StringIO(decoded.decode('utf-8')), header=None)
         elif 'xls' in filename.lower():
-            df = pd.read_excel(io.BytesIO(decoded))
+            df = pd.read_excel(io.BytesIO(decoded), header=None)
         else:
             return None
     except Exception as e:
@@ -488,8 +551,10 @@ def parse_contents(contents, filename):
     return df
 
 def detectar_patrones_western_electric(datos, UCL, LCL, CL):
+    """Detecta patrones Western Electric (Reglas 1-5)"""
     n = len(datos)
     violaciones = []
+    violaciones_detectadas = set()
     
     sigma_1 = (UCL - CL) / 3
     limite_2sigma_superior = CL + 2 * sigma_1
@@ -497,49 +562,173 @@ def detectar_patrones_western_electric(datos, UCL, LCL, CL):
     limite_1sigma_superior = CL + sigma_1
     limite_1sigma_inferior = CL - sigma_1
     
+    # Regla 1: Un punto fuera de 3σ
     for i in range(n):
         if datos[i] > UCL or datos[i] < LCL:
-            violaciones.append(f"Regla 1: Punto {i+1} fuera de límites (3σ)")
+            key = f"R1-{i}"
+            if key not in violaciones_detectadas:
+                violaciones.append(f"Regla 1: Punto {i+1} fuera de límites (3σ) - Valor: {datos[i]:.4f}")
+                violaciones_detectadas.add(key)
     
+    # Regla 2: 2 de 3 puntos fuera de 2σ
     for i in range(n-2):
         ventana = datos[i:i+3]
-        fuera_2sigma = sum(1 for x in ventana if x > limite_2sigma_superior or x < limite_2sigma_inferior)
-        if fuera_2sigma >= 2:
-            violaciones.append(f"Regla 2: Puntos {i+1}-{i+3} - 2/3 fuera de 2σ")
+        fuera_2sigma_sup = sum(1 for x in ventana if x > limite_2sigma_superior)
+        fuera_2sigma_inf = sum(1 for x in ventana if x < limite_2sigma_inferior)
+        
+        if fuera_2sigma_sup >= 2:
+            key = f"R2-{i}-sup"
+            if key not in violaciones_detectadas:
+                violaciones.append(f"Regla 2: Puntos {i+1}-{i+3} - 2/3 fuera de 2σ (superior)")
+                violaciones_detectadas.add(key)
+        
+        if fuera_2sigma_inf >= 2:
+            key = f"R2-{i}-inf"
+            if key not in violaciones_detectadas:
+                violaciones.append(f"Regla 2: Puntos {i+1}-{i+3} - 2/3 fuera de 2σ (inferior)")
+                violaciones_detectadas.add(key)
     
+    # Regla 3: 4 de 5 puntos fuera de 1σ
     for i in range(n-4):
         ventana = datos[i:i+5]
-        fuera_1sigma = sum(1 for x in ventana if x > limite_1sigma_superior or x < limite_1sigma_inferior)
-        if fuera_1sigma >= 4:
-            violaciones.append(f"Regla 3: Puntos {i+1}-{i+5} - 4/5 fuera de 1σ")
+        fuera_1sigma_sup = sum(1 for x in ventana if x > limite_1sigma_superior)
+        fuera_1sigma_inf = sum(1 for x in ventana if x < limite_1sigma_inferior)
+        
+        if fuera_1sigma_sup >= 4:
+            key = f"R3-{i}-sup"
+            if key not in violaciones_detectadas:
+                violaciones.append(f"Regla 3: Puntos {i+1}-{i+5} - 4/5 fuera de 1σ (superior)")
+                violaciones_detectadas.add(key)
+        
+        if fuera_1sigma_inf >= 4:
+            key = f"R3-{i}-inf"
+            if key not in violaciones_detectadas:
+                violaciones.append(f"Regla 3: Puntos {i+1}-{i+5} - 4/5 fuera de 1σ (inferior)")
+                violaciones_detectadas.add(key)
     
+    # Regla 4: 8 puntos consecutivos en un lado
     for i in range(n-7):
         ventana = datos[i:i+8]
-        if all(x > CL for x in ventana) or all(x < CL for x in ventana):
-            violaciones.append(f"Regla 4: Puntos {i+1}-{i+8} - 8 consecutivos en un lado")
+        if all(x > CL for x in ventana):
+            key = f"R4-{i}-sup"
+            if key not in violaciones_detectadas:
+                violaciones.append(f"Regla 4: Puntos {i+1}-{i+8} - 8 consecutivos arriba de CL")
+                violaciones_detectadas.add(key)
+        elif all(x < CL for x in ventana):
+            key = f"R4-{i}-inf"
+            if key not in violaciones_detectadas:
+                violaciones.append(f"Regla 4: Puntos {i+1}-{i+8} - 8 consecutivos debajo de CL")
+                violaciones_detectadas.add(key)
     
+    # Regla 5: 6 puntos en tendencia
     for i in range(n-5):
         ventana = datos[i:i+6]
         if all(ventana[j] < ventana[j+1] for j in range(5)):
-            violaciones.append(f"Regla 5: Puntos {i+1}-{i+6} - Tendencia ascendente")
+            key = f"R5-{i}-asc"
+            if key not in violaciones_detectadas:
+                violaciones.append(f"Regla 5: Puntos {i+1}-{i+6} - Tendencia ascendente continua")
+                violaciones_detectadas.add(key)
         elif all(ventana[j] > ventana[j+1] for j in range(5)):
-            violaciones.append(f"Regla 5: Puntos {i+1}-{i+6} - Tendencia descendente")
+            key = f"R5-{i}-desc"
+            if key not in violaciones_detectadas:
+                violaciones.append(f"Regla 5: Puntos {i+1}-{i+6} - Tendencia descendente continua")
+                violaciones_detectadas.add(key)
     
     return violaciones
 
-def analizar_capacidad(datos, UCL, LCL):
-    sigma_estimada = (UCL - LCL) / 6
-    if sigma_estimada == 0:
+def analizar_capacidad(subgroups, UCL, LCL, USL=None, LSL=None, chart_type='XR'):
+    """
+    Calcula índices Cp, Cpk, Pp, Ppk
+    - Cp/Cpk: Capacidad potencial/real (usa sigma estimada de subgrupos)
+    - Pp/Ppk: Performance (usa desviación estándar total)
+    """
+    medias = np.nanmean(subgroups, axis=1)
+    media_proceso = np.mean(medias)
+    
+    # Sigma estimada (dentro de subgrupos) para Cp/Cpk
+    if chart_type == 'XR':
+        rangos = np.ptp(subgroups, axis=1)
+        n = subgroups.shape[1]
+        if n not in CONTROL_CHART_CONSTANTS:
+            n_keys = sorted(CONTROL_CHART_CONSTANTS.keys())
+            n = min(n_keys, key=lambda x: abs(x - n))
+        d2 = CONTROL_CHART_CONSTANTS[n]['d2']
+        sigma_within = np.mean(rangos) / d2
+    else:
+        stds = np.nanstd(subgroups, axis=1, ddof=1)
+        n = subgroups.shape[1]
+        if n not in CONTROL_CHART_CONSTANTS:
+            n_keys = sorted(CONTROL_CHART_CONSTANTS.keys())
+            n = min(n_keys, key=lambda x: abs(x - n))
+        c4 = CONTROL_CHART_CONSTANTS[n]['c4']
+        sigma_within = np.mean(stds) / c4
+    
+    # Sigma total (todas las observaciones) para Pp/Ppk
+    todos_datos = subgroups.flatten()
+    todos_datos = todos_datos[~np.isnan(todos_datos)]
+    sigma_total = np.std(todos_datos, ddof=1)
+    
+    if sigma_within == 0 or sigma_total == 0:
         return None
     
-    rango_especificacion = UCL - LCL
-    Cp = rango_especificacion / (6 * sigma_estimada)
-    
-    return {
-        'sigma': sigma_estimada,
-        'Cp': Cp,
-        'interpretacion': 'Excelente' if Cp >= 2.0 else 'Adecuado' if Cp >= 1.33 else 'Marginal' if Cp >= 1.0 else 'Inadecuado'
-    }
+    # Con límites de especificación
+    if USL is not None and LSL is not None:
+        rango_especificacion = USL - LSL
+        
+        # Cp y Cpk (capacidad)
+        Cp = rango_especificacion / (6 * sigma_within)
+        Cpu = (USL - media_proceso) / (3 * sigma_within)
+        Cpl = (media_proceso - LSL) / (3 * sigma_within)
+        Cpk = min(Cpu, Cpl)
+        
+        # Pp y Ppk (performance)
+        Pp = rango_especificacion / (6 * sigma_total)
+        Ppu = (USL - media_proceso) / (3 * sigma_total)
+        Ppl = (media_proceso - LSL) / (3 * sigma_total)
+        Ppk = min(Ppu, Ppl)
+        
+        # Interpretaciones
+        def interpretar(valor):
+            if valor >= 2.0:
+                return 'Excelente (Clase Mundial)'
+            elif valor >= 1.33:
+                return 'Adecuado'
+            elif valor >= 1.0:
+                return 'Marginal (Requiere mejora)'
+            else:
+                return 'Inadecuado (Acción inmediata)'
+        
+        return {
+            'sigma_within': sigma_within,
+            'sigma_total': sigma_total,
+            'media': media_proceso,
+            'Cp': Cp,
+            'Cpk': Cpk,
+            'Cpu': Cpu,
+            'Cpl': Cpl,
+            'Pp': Pp,
+            'Ppk': Ppk,
+            'Ppu': Ppu,
+            'Ppl': Ppl,
+            'interpretacion_cp': interpretar(Cp),
+            'interpretacion_cpk': interpretar(Cpk),
+            'interpretacion_pp': interpretar(Pp),
+            'interpretacion_ppk': interpretar(Ppk),
+            'tiene_limites': True
+        }
+    else:
+        # Sin límites de especificación
+        rango_control = UCL - LCL
+        Cp = rango_control / (6 * sigma_within)
+        
+        return {
+            'sigma_within': sigma_within,
+            'sigma_total': sigma_total,
+            'media': media_proceso,
+            'Cp': Cp,
+            'interpretacion_cp': 'Excelente' if Cp >= 2.0 else 'Adecuado' if Cp >= 1.33 else 'Marginal' if Cp >= 1.0 else 'Inadecuado',
+            'tiene_limites': False
+        }
 
 @app.callback(
     [Output('chart-xbar', 'figure'),
@@ -556,9 +745,10 @@ def analizar_capacidad(datos, UCL, LCL):
     State('manual-table', 'data'),
     State('input-method', 'value'),
     State('chart-type', 'value'),
-    State('alpha', 'value')
+    State('usl-input', 'value'),
+    State('lsl-input', 'value')
 )
-def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, alpha):
+def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, USL, LSL):
     empty_results = (go.Figure(), go.Figure(), "", {}, "", "", "", {'display': 'none'})
     
     if n_clicks == 0:
@@ -598,7 +788,6 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
     A2, A3 = constants['A2'], constants['A3']
     D3, D4 = constants['D3'], constants['D4']
     B3, B4 = constants['B3'], constants['B4']
-    d2, c4 = constants['d2'], constants['c4']
 
     CLx = np.mean(means)
     CLr = np.mean(ranges)
@@ -609,15 +798,13 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
         LCLx = CLx - A2 * CLr
         UCLr = D4 * CLr
         LCLr = D3 * CLr
-        sigma_estimada = CLr / d2
     else:
         UCLx = CLx + A3 * CLs
         LCLx = CLx - A3 * CLs
         UCLs = B4 * CLs
         LCLs = B3 * CLs
-        sigma_estimada = CLs / c4
 
-    # Gráfico X̄ profesional
+    # Gráfico X̄
     num_subgrupos = np.arange(1, len(means) + 1)
     
     fig_xbar = go.Figure()
@@ -631,6 +818,7 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
         hovertemplate='<b>Subgrupo %{x}</b><br>X̄ = %{y:.4f}<extra></extra>'
     ))
     
+    # Límites de control
     fig_xbar.add_hline(y=UCLx, line_dash='dash', line_color=colors['danger'], line_width=2.5,
                        annotation_text=f"UCL {UCLx:.4f}", annotation_position="right",
                        annotation=dict(font=dict(size=11, color=colors['danger'])))
@@ -641,7 +829,18 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
                        annotation_text=f"CL {CLx:.4f}", annotation_position="right",
                        annotation=dict(font=dict(size=11, color=colors['success'])))
     
-    # Zonas sigma profesionales
+    # Límites de especificación USL/LSL
+    if USL is not None:
+        fig_xbar.add_hline(y=USL, line_dash='dot', line_color='purple', line_width=2.5,
+                           annotation_text=f"USL {USL:.4f}", annotation_position="left",
+                           annotation=dict(font=dict(size=11, color='purple')))
+    
+    if LSL is not None:
+        fig_xbar.add_hline(y=LSL, line_dash='dot', line_color='purple', line_width=2.5,
+                           annotation_text=f"LSL {LSL:.4f}", annotation_position="left",
+                           annotation=dict(font=dict(size=11, color='purple')))
+    
+    # Zonas sigma
     sigma_1 = (UCLx - CLx) / 3
     fig_xbar.add_hrect(y0=CLx + sigma_1, y1=CLx + 2*sigma_1, fillcolor=colors['warning'], opacity=0.1, line_width=0)
     fig_xbar.add_hrect(y0=CLx - sigma_1, y1=CLx - 2*sigma_1, fillcolor=colors['warning'], opacity=0.1, line_width=0)
@@ -671,7 +870,7 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
         margin=dict(l=70, r=70, t=90, b=70)
     )
 
-    # Gráfico R/S profesional
+    # Gráfico R/S
     fig_rs = go.Figure()
     
     if chart_type == 'XR':
@@ -750,7 +949,7 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
         margin=dict(l=70, r=70, t=90, b=70)
     )
 
-    # Análisis completo de control - CORREGIDO
+    # Análisis
     if chart_type == 'XR':
         num_fuera_control = len(fuera_control_x) + len(fuera_control_r)
     else:
@@ -758,14 +957,14 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
     
     violaciones_patrones = detectar_patrones_western_electric(means, UCLx, LCLx, CLx)
     
-    # Alerta principal profesional
+    # Alerta principal
     if num_fuera_control > 0 or len(violaciones_patrones) > 0:
         alerta_texto = html.Div([
             html.Div(style={'display': 'flex', 'alignItems': 'center', 'gap': '20px'}, children=[
                 html.Div("⚠️", style={'fontSize': '60px'}),
                 html.Div([
                     html.Div("Proceso Fuera de Control", style={'fontSize': '28px', 'fontWeight': '700', 'marginBottom': '8px'}),
-                    html.Div(f"{num_fuera_control} puntos detectados fuera de los límites de control", 
+                    html.Div(f"{num_fuera_control} puntos fuera de límites • {len(violaciones_patrones)} patrones anormales", 
                             style={'fontSize': '16px', 'fontWeight': '500', 'opacity': '0.9'})
                 ])
             ])
@@ -785,8 +984,8 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
             html.Div(style={'display': 'flex', 'alignItems': 'center', 'gap': '20px'}, children=[
                 html.Div("✓", style={'fontSize': '60px', 'color': colors['success'], 'fontWeight': 'bold'}),
                 html.Div([
-                    html.Div("Proceso Bajo Control", style={'fontSize': '28px', 'fontWeight': '700', 'marginBottom': '8px'}),
-                    html.Div("Todos los puntos dentro de los límites de control establecidos", 
+                    html.Div("Proceso Bajo Control Estadístico", style={'fontSize': '28px', 'fontWeight': '700', 'marginBottom': '8px'}),
+                    html.Div("Todos los puntos dentro de límites y sin patrones anormales", 
                             style={'fontSize': '16px', 'fontWeight': '500', 'opacity': '0.9'})
                 ])
             ])
@@ -802,16 +1001,12 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
             'color': colors['text_primary']
         }
 
-    # Estadísticas profesionales
-    capacidad = analizar_capacidad(means, UCLx, LCLx)
+    # Análisis de capacidad con Pp y Ppk
+    capacidad = analizar_capacidad(subgroups, UCLx, LCLx, USL, LSL, chart_type)
     
-    estadisticas_html = html.Div(style={
-        'display': 'grid',
-        'gridTemplateColumns': 'repeat(auto-fit, minmax(320px, 1fr))',
-        'gap': '25px',
-        'marginBottom': '30px'
-    }, children=[
-        # Card 1: X̄
+    # Cards de estadísticas
+    estadisticas_cards = [
+        # Card X̄
         html.Div(style={
             'backgroundColor': colors['bg_card'],
             'border': f'1px solid {colors["border"]}',
@@ -820,29 +1015,25 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
             'padding': '30px',
             'boxShadow': f'0 4px 12px {colors["shadow"]}'
         }, children=[
-            html.Div(style={'marginBottom': '25px'}, children=[
-                html.Div("GRÁFICO X̄", style={'fontSize': '13px', 'fontWeight': '700', 'color': colors['text_secondary'], 'letterSpacing': '1px', 'marginBottom': '10px'}),
-                html.Div("Promedios del Proceso", style={'fontSize': '20px', 'fontWeight': '700', 'color': colors['text_primary']})
-            ]),
+            html.Div("GRÁFICO X̄", style={'fontSize': '13px', 'fontWeight': '700', 'color': colors['text_secondary'], 'marginBottom': '10px', 'letterSpacing': '1px'}),
+            html.Div("Promedios del Proceso", style={'fontSize': '18px', 'fontWeight': '700', 'color': colors['text_primary'], 'marginBottom': '20px'}),
             html.Div([
+                html.Div("Línea Central", style={'fontSize': '11px', 'color': colors['text_secondary'], 'marginBottom': '5px'}),
+                html.Div(f"{CLx:.4f}", style={'fontSize': '28px', 'fontWeight': '700', 'color': colors['text_primary'], 'marginBottom': '15px'})
+            ], style={'padding': '15px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px', 'marginBottom': '15px'}),
+            html.Div(style={'display': 'grid', 'gridTemplateColumns': '1fr 1fr', 'gap': '10px'}, children=[
                 html.Div([
-                    html.Div("Línea Central", style={'fontSize': '12px', 'color': colors['text_secondary'], 'fontWeight': '600', 'marginBottom': '5px'}),
-                    html.Div(f"{CLx:.4f}", style={'fontSize': '32px', 'fontWeight': '700', 'color': colors['text_primary']})
-                ], style={'marginBottom': '20px', 'padding': '15px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px'}),
-                html.Div(style={'display': 'grid', 'gridTemplateColumns': '1fr 1fr', 'gap': '15px'}, children=[
-                    html.Div([
-                        html.Div("UCL", style={'fontSize': '11px', 'color': colors['text_secondary'], 'fontWeight': '600', 'marginBottom': '5px'}),
-                        html.Div(f"{UCLx:.4f}", style={'fontSize': '18px', 'fontWeight': '700', 'color': colors['danger']})
-                    ]),
-                    html.Div([
-                        html.Div("LCL", style={'fontSize': '11px', 'color': colors['text_secondary'], 'fontWeight': '600', 'marginBottom': '5px'}),
-                        html.Div(f"{LCLx:.4f}", style={'fontSize': '18px', 'fontWeight': '700', 'color': colors['danger']})
-                    ])
+                    html.Div("UCL", style={'fontSize': '10px', 'color': colors['text_secondary'], 'marginBottom': '3px'}),
+                    html.Div(f"{UCLx:.4f}", style={'fontSize': '16px', 'fontWeight': '700', 'color': colors['danger']})
+                ]),
+                html.Div([
+                    html.Div("LCL", style={'fontSize': '10px', 'color': colors['text_secondary'], 'marginBottom': '3px'}),
+                    html.Div(f"{LCLx:.4f}", style={'fontSize': '16px', 'fontWeight': '700', 'color': colors['danger']})
                 ])
             ])
         ]),
         
-        # Card 2: R/S
+        # Card R/S
         html.Div(style={
             'backgroundColor': colors['bg_card'],
             'border': f'1px solid {colors["border"]}',
@@ -851,78 +1042,177 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
             'padding': '30px',
             'boxShadow': f'0 4px 12px {colors["shadow"]}'
         }, children=[
-            html.Div(style={'marginBottom': '25px'}, children=[
-                html.Div(f"GRÁFICO {'R' if chart_type == 'XR' else 'S'}", style={'fontSize': '13px', 'fontWeight': '700', 'color': colors['text_secondary'], 'letterSpacing': '1px', 'marginBottom': '10px'}),
-                html.Div(f"{'Rangos' if chart_type == 'XR' else 'Desviación Estándar'}", style={'fontSize': '20px', 'fontWeight': '700', 'color': colors['text_primary']})
-            ]),
+            html.Div(f"GRÁFICO {'R' if chart_type == 'XR' else 'S'}", style={'fontSize': '13px', 'fontWeight': '700', 'color': colors['text_secondary'], 'marginBottom': '10px', 'letterSpacing': '1px'}),
+            html.Div(f"{'Rangos' if chart_type == 'XR' else 'Desviación Estándar'}", style={'fontSize': '18px', 'fontWeight': '700', 'color': colors['text_primary'], 'marginBottom': '20px'}),
             html.Div([
+                html.Div("Línea Central", style={'fontSize': '11px', 'color': colors['text_secondary'], 'marginBottom': '5px'}),
+                html.Div(f"{CLr if chart_type == 'XR' else CLs:.4f}", style={'fontSize': '28px', 'fontWeight': '700', 'color': colors['text_primary'], 'marginBottom': '15px'})
+            ], style={'padding': '15px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px', 'marginBottom': '15px'}),
+            html.Div(style={'display': 'grid', 'gridTemplateColumns': '1fr 1fr', 'gap': '10px'}, children=[
                 html.Div([
-                    html.Div("Línea Central", style={'fontSize': '12px', 'color': colors['text_secondary'], 'fontWeight': '600', 'marginBottom': '5px'}),
-                    html.Div(f"{CLr if chart_type == 'XR' else CLs:.4f}", 
-                            style={'fontSize': '32px', 'fontWeight': '700', 'color': colors['text_primary']})
-                ], style={'marginBottom': '20px', 'padding': '15px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px'}),
-                html.Div(style={'display': 'grid', 'gridTemplateColumns': '1fr 1fr', 'gap': '15px'}, children=[
-                    html.Div([
-                        html.Div("UCL", style={'fontSize': '11px', 'color': colors['text_secondary'], 'fontWeight': '600', 'marginBottom': '5px'}),
-                        html.Div(f"{UCLr if chart_type == 'XR' else UCLs:.4f}", 
-                                style={'fontSize': '18px', 'fontWeight': '700', 'color': colors['danger']})
-                    ]),
-                    html.Div([
-                        html.Div("Tamaño (n)", style={'fontSize': '11px', 'color': colors['text_secondary'], 'fontWeight': '600', 'marginBottom': '5px'}),
-                        html.Div(f"{n}", style={'fontSize': '18px', 'fontWeight': '700', 'color': colors['text_primary']})
-                    ])
+                    html.Div("UCL", style={'fontSize': '10px', 'color': colors['text_secondary'], 'marginBottom': '3px'}),
+                    html.Div(f"{UCLr if chart_type == 'XR' else UCLs:.4f}", style={'fontSize': '16px', 'fontWeight': '700', 'color': colors['danger']})
+                ]),
+                html.Div([
+                    html.Div("n", style={'fontSize': '10px', 'color': colors['text_secondary'], 'marginBottom': '3px'}),
+                    html.Div(f"{n}", style={'fontSize': '16px', 'fontWeight': '700', 'color': colors['text_primary']})
                 ])
             ])
-        ]),
+        ])
+    ]
+    
+    # Cards de capacidad
+    if capacidad:
+        # Card Cp
+        estadisticas_cards.append(
+            html.Div(style={
+                'backgroundColor': colors['bg_card'],
+                'border': f'1px solid {colors["border"]}',
+                'borderTop': f'4px solid {colors["success"]}',
+                'borderRadius': '8px',
+                'padding': '30px',
+                'boxShadow': f'0 4px 12px {colors["shadow"]}'
+            }, children=[
+                html.Div("CAPACIDAD (Cp)", style={'fontSize': '13px', 'fontWeight': '700', 'color': colors['text_secondary'], 'marginBottom': '10px', 'letterSpacing': '1px'}),
+                html.Div("Potencial del Proceso", style={'fontSize': '18px', 'fontWeight': '700', 'color': colors['text_primary'], 'marginBottom': '20px'}),
+                html.Div([
+                    html.Div("Índice Cp", style={'fontSize': '11px', 'color': colors['text_secondary'], 'marginBottom': '5px'}),
+                    html.Div(f"{capacidad['Cp']:.3f}", style={'fontSize': '32px', 'fontWeight': '700', 'color': colors['text_primary']})
+                ], style={'padding': '15px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px', 'marginBottom': '15px'}),
+                html.Div(capacidad['interpretacion_cp'], style={
+                    'padding': '8px 16px',
+                    'background': colors['success'] if capacidad['Cp'] >= 1.33 else colors['warning'] if capacidad['Cp'] >= 1.0 else colors['danger'],
+                    'borderRadius': '6px',
+                    'fontSize': '12px',
+                    'fontWeight': '700',
+                    'textAlign': 'center',
+                    'color': 'white',
+                    'textTransform': 'uppercase'
+                })
+            ])
+        )
         
-        # Card 3: Capacidad
-        html.Div(style={
-            'backgroundColor': colors['bg_card'],
-            'border': f'1px solid {colors["border"]}',
-            'borderTop': f'4px solid {colors["success"]}',
-            'borderRadius': '8px',
-            'padding': '30px',
-            'boxShadow': f'0 4px 12px {colors["shadow"]}'
-        }, children=[
-            html.Div(style={'marginBottom': '25px'}, children=[
-                html.Div("CAPACIDAD", style={'fontSize': '13px', 'fontWeight': '700', 'color': colors['text_secondary'], 'letterSpacing': '1px', 'marginBottom': '10px'}),
-                html.Div("Índice del Proceso", style={'fontSize': '20px', 'fontWeight': '700', 'color': colors['text_primary']})
-            ]),
-            html.Div([
-                html.Div([
-                    html.Div("Índice Cp", style={'fontSize': '12px', 'color': colors['text_secondary'], 'fontWeight': '600', 'marginBottom': '5px'}),
-                    html.Div(f"{capacidad['Cp']:.3f}" if capacidad else "N/A", 
-                            style={'fontSize': '38px', 'fontWeight': '700', 'color': colors['text_primary']})
-                ], style={'marginBottom': '20px', 'padding': '15px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px'}),
-                html.Div([
-                    html.Div("σ estimada", style={'fontSize': '11px', 'color': colors['text_secondary'], 'fontWeight': '600', 'marginBottom': '5px'}),
-                    html.Div(f"{sigma_estimada:.4f}", style={'fontSize': '16px', 'fontWeight': '700', 'color': colors['text_primary'], 'marginBottom': '15px'})
-                ]),
-                html.Div(
-                    capacidad['interpretacion'] if capacidad else "N/A",
-                    style={
-                        'padding': '10px 20px',
-                        'background': colors['success'] if capacidad and capacidad['Cp'] >= 1.33 else colors['danger'],
+        # Card Cpk (solo si hay límites)
+        if capacidad['tiene_limites']:
+            estadisticas_cards.append(
+                html.Div(style={
+                    'backgroundColor': colors['bg_card'],
+                    'border': f'1px solid {colors["border"]}',
+                    'borderTop': '4px solid #9C27B0',
+                    'borderRadius': '8px',
+                    'padding': '30px',
+                    'boxShadow': f'0 4px 12px {colors["shadow"]}'
+                }, children=[
+                    html.Div("CAPACIDAD REAL (Cpk)", style={'fontSize': '13px', 'fontWeight': '700', 'color': colors['text_secondary'], 'marginBottom': '10px', 'letterSpacing': '1px'}),
+                    html.Div("Con Centrado", style={'fontSize': '18px', 'fontWeight': '700', 'color': colors['text_primary'], 'marginBottom': '20px'}),
+                    html.Div([
+                        html.Div("Índice Cpk", style={'fontSize': '11px', 'color': colors['text_secondary'], 'marginBottom': '5px'}),
+                        html.Div(f"{capacidad['Cpk']:.3f}", style={'fontSize': '32px', 'fontWeight': '700', 'color': colors['text_primary']})
+                    ], style={'padding': '15px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px', 'marginBottom': '15px'}),
+                    html.Div(style={'display': 'grid', 'gridTemplateColumns': '1fr 1fr', 'gap': '10px', 'marginBottom': '15px'}, children=[
+                        html.Div([
+                            html.Div("Cpu", style={'fontSize': '10px', 'color': colors['text_secondary'], 'marginBottom': '3px'}),
+                            html.Div(f"{capacidad['Cpu']:.3f}", style={'fontSize': '14px', 'fontWeight': '700', 'color': colors['text_primary']})
+                        ]),
+                        html.Div([
+                            html.Div("Cpl", style={'fontSize': '10px', 'color': colors['text_secondary'], 'marginBottom': '3px'}),
+                            html.Div(f"{capacidad['Cpl']:.3f}", style={'fontSize': '14px', 'fontWeight': '700', 'color': colors['text_primary']})
+                        ])
+                    ]),
+                    html.Div(capacidad['interpretacion_cpk'], style={
+                        'padding': '8px 16px',
+                        'background': colors['success'] if capacidad['Cpk'] >= 1.33 else colors['warning'] if capacidad['Cpk'] >= 1.0 else colors['danger'],
                         'borderRadius': '6px',
-                        'fontSize': '14px',
+                        'fontSize': '12px',
                         'fontWeight': '700',
                         'textAlign': 'center',
                         'color': 'white',
-                        'textTransform': 'uppercase',
-                        'letterSpacing': '0.5px'
-                    }
-                )
-            ])
-        ])
-    ])
+                        'textTransform': 'uppercase'
+                    })
+                ])
+            )
+            
+            # Card Pp
+            estadisticas_cards.append(
+                html.Div(style={
+                    'backgroundColor': colors['bg_card'],
+                    'border': f'1px solid {colors["border"]}',
+                    'borderTop': '4px solid #FF5722',
+                    'borderRadius': '8px',
+                    'padding': '30px',
+                    'boxShadow': f'0 4px 12px {colors["shadow"]}'
+                }, children=[
+                    html.Div("PERFORMANCE (Pp)", style={'fontSize': '13px', 'fontWeight': '700', 'color': colors['text_secondary'], 'marginBottom': '10px', 'letterSpacing': '1px'}),
+                    html.Div("Desempeño Total", style={'fontSize': '18px', 'fontWeight': '700', 'color': colors['text_primary'], 'marginBottom': '20px'}),
+                    html.Div([
+                        html.Div("Índice Pp", style={'fontSize': '11px', 'color': colors['text_secondary'], 'marginBottom': '5px'}),
+                        html.Div(f"{capacidad['Pp']:.3f}", style={'fontSize': '32px', 'fontWeight': '700', 'color': colors['text_primary']})
+                    ], style={'padding': '15px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px', 'marginBottom': '15px'}),
+                    html.Div(capacidad['interpretacion_pp'], style={
+                        'padding': '8px 16px',
+                        'background': colors['success'] if capacidad['Pp'] >= 1.33 else colors['warning'] if capacidad['Pp'] >= 1.0 else colors['danger'],
+                        'borderRadius': '6px',
+                        'fontSize': '12px',
+                        'fontWeight': '700',
+                        'textAlign': 'center',
+                        'color': 'white',
+                        'textTransform': 'uppercase'
+                    })
+                ])
+            )
+            
+            # Card Ppk
+            estadisticas_cards.append(
+                html.Div(style={
+                    'backgroundColor': colors['bg_card'],
+                    'border': f'1px solid {colors["border"]}',
+                    'borderTop': '4px solid #FF6F00',
+                    'borderRadius': '8px',
+                    'padding': '30px',
+                    'boxShadow': f'0 4px 12px {colors["shadow"]}'
+                }, children=[
+                    html.Div("PERFORMANCE REAL (Ppk)", style={'fontSize': '13px', 'fontWeight': '700', 'color': colors['text_secondary'], 'marginBottom': '10px', 'letterSpacing': '1px'}),
+                    html.Div("Con Centrado", style={'fontSize': '18px', 'fontWeight': '700', 'color': colors['text_primary'], 'marginBottom': '20px'}),
+                    html.Div([
+                        html.Div("Índice Ppk", style={'fontSize': '11px', 'color': colors['text_secondary'], 'marginBottom': '5px'}),
+                        html.Div(f"{capacidad['Ppk']:.3f}", style={'fontSize': '32px', 'fontWeight': '700', 'color': colors['text_primary']})
+                    ], style={'padding': '15px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px', 'marginBottom': '15px'}),
+                    html.Div(style={'display': 'grid', 'gridTemplateColumns': '1fr 1fr', 'gap': '10px', 'marginBottom': '15px'}, children=[
+                        html.Div([
+                            html.Div("Ppu", style={'fontSize': '10px', 'color': colors['text_secondary'], 'marginBottom': '3px'}),
+                            html.Div(f"{capacidad['Ppu']:.3f}", style={'fontSize': '14px', 'fontWeight': '700', 'color': colors['text_primary']})
+                        ]),
+                        html.Div([
+                            html.Div("Ppl", style={'fontSize': '10px', 'color': colors['text_secondary'], 'marginBottom': '3px'}),
+                            html.Div(f"{capacidad['Ppl']:.3f}", style={'fontSize': '14px', 'fontWeight': '700', 'color': colors['text_primary']})
+                        ])
+                    ]),
+                    html.Div(capacidad['interpretacion_ppk'], style={
+                        'padding': '8px 16px',
+                        'background': colors['success'] if capacidad['Ppk'] >= 1.33 else colors['warning'] if capacidad['Ppk'] >= 1.0 else colors['danger'],
+                        'borderRadius': '6px',
+                        'fontSize': '12px',
+                        'fontWeight': '700',
+                        'textAlign': 'center',
+                        'color': 'white',
+                        'textTransform': 'uppercase'
+                    })
+                ])
+            )
+    
+    estadisticas_html = html.Div(style={
+        'display': 'grid',
+        'gridTemplateColumns': 'repeat(auto-fit, minmax(260px, 1fr))',
+        'gap': '20px',
+        'marginBottom': '30px'
+    }, children=estadisticas_cards)
 
-    # Análisis avanzado profesional
+    # Análisis avanzado
     analisis_html = html.Div(style={
         'backgroundColor': colors['bg_card'],
         'borderRadius': '8px',
         'padding': '35px',
         'marginBottom': '30px',
-        'marginTop': '30px',
         'border': f'1px solid {colors["border"]}',
         'boxShadow': f'0 4px 12px {colors["shadow"]}'
     }, children=[
@@ -936,50 +1226,45 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
         ]),
         
         html.Div([
-            html.Div(style={'marginBottom': '30px'}, children=[
-                html.Div("PUNTOS FUERA DE CONTROL", style={'fontSize': '12px', 'fontWeight': '700', 'color': colors['text_secondary'], 'letterSpacing': '1px', 'marginBottom': '12px'}),
-                html.Div(style={
-                    'display': 'inline-flex',
-                    'alignItems': 'center',
-                    'gap': '15px',
-                    'padding': '15px 25px',
-                    'background': '#FFEBEE' if num_fuera_control > 0 else '#E8F5E9',
-                    'borderRadius': '6px',
-                    'border': f'1px solid {colors["danger"] if num_fuera_control > 0 else colors["success"]}'
-                }, children=[
-                    html.Span(f"{num_fuera_control}", style={'fontSize': '32px', 'fontWeight': '700', 'color': colors['danger'] if num_fuera_control > 0 else colors['success']}),
-                    html.Span("detectados", style={'fontSize': '14px', 'fontWeight': '600', 'color': colors['text_secondary']})
-                ]),
+            html.Div("PUNTOS FUERA DE CONTROL", style={'fontSize': '12px', 'fontWeight': '700', 'color': colors['text_secondary'], 'letterSpacing': '1px', 'marginBottom': '15px'}),
+            html.Div(style={
+                'display': 'inline-flex',
+                'alignItems': 'center',
+                'gap': '15px',
+                'padding': '15px 25px',
+                'background': '#FFEBEE' if num_fuera_control > 0 else '#E8F5E9',
+                'borderRadius': '6px',
+                'border': f'1px solid {colors["danger"] if num_fuera_control > 0 else colors["success"]}',
+                'marginBottom': '20px'
+            }, children=[
+                html.Span(f"{num_fuera_control}", style={'fontSize': '32px', 'fontWeight': '700', 'color': colors['danger'] if num_fuera_control > 0 else colors['success']}),
+                html.Span("puntos detectados", style={'fontSize': '14px', 'fontWeight': '600', 'color': colors['text_secondary']})
             ]),
             
             html.Div([
                 html.Div([
-                    html.Div([
-                        html.Div("Gráfico X̄:", style={'fontWeight': '700', 'marginBottom': '10px', 'color': colors['chart_line1']}),
-                        html.Ul([
-                            html.Li(f"Subgrupo {i+1}: X̄ = {means[i]:.4f}", 
-                                   style={'color': colors['text_primary'], 'marginBottom': '5px', 'fontSize': '14px', 'fontWeight': '500'}) 
-                            for i in fuera_control_x
-                        ], style={'paddingLeft': '20px', 'margin': '0'}) if len(fuera_control_x) > 0 
-                        else html.P("Ningún punto fuera de control", style={'color': colors['success'], 'fontWeight': '500', 'fontSize': '14px', 'margin': '0', 'paddingLeft': '20px'})
-                    ], style={'marginBottom': '15px'}),
-                    html.Div([
-                        html.Div(f"Gráfico {'R' if chart_type == 'XR' else 'S'}:", style={'fontWeight': '700', 'marginBottom': '10px', 'color': colors['chart_line2']}),
-                        html.Ul([
-                            html.Li(f"Subgrupo {i+1}: {'R' if chart_type == 'XR' else 'S'} = {(ranges[i] if chart_type == 'XR' else stds[i]):.4f}", 
-                                   style={'color': colors['text_primary'], 'marginBottom': '5px', 'fontSize': '14px', 'fontWeight': '500'}) 
-                            for i in (fuera_control_r if chart_type == 'XR' else fuera_control_s)
-                        ], style={'paddingLeft': '20px', 'margin': '0'}) if len(fuera_control_r if chart_type == 'XR' else fuera_control_s) > 0 
-                        else html.P("Ningún punto fuera de control", style={'color': colors['success'], 'fontWeight': '500', 'fontSize': '14px', 'margin': '0', 'paddingLeft': '20px'})
-                    ])
-                ]) if num_fuera_control > 0 
-                else html.P("Todos los puntos dentro de los límites de control", 
-                           style={'color': colors['success'], 'fontWeight': '600', 'fontSize': '15px', 'margin': '0'})
+                    html.Div("Gráfico X̄:", style={'fontWeight': '700', 'marginBottom': '10px', 'color': colors['chart_line1'], 'fontSize': '15px'}),
+                    html.Ul([
+                        html.Li(f"Subgrupo {i+1}: X̄ = {means[i]:.4f}", 
+                               style={'color': colors['text_primary'], 'marginBottom': '5px', 'fontSize': '14px'}) 
+                        for i in fuera_control_x
+                    ], style={'paddingLeft': '20px'}) if len(fuera_control_x) > 0 
+                    else html.P("✓ Todos los puntos bajo control", style={'color': colors['success'], 'fontWeight': '600', 'paddingLeft': '20px'})
+                ], style={'marginBottom': '15px'}),
+                html.Div([
+                    html.Div(f"Gráfico {'R' if chart_type == 'XR' else 'S'}:", style={'fontWeight': '700', 'marginBottom': '10px', 'color': colors['chart_line2'], 'fontSize': '15px'}),
+                    html.Ul([
+                        html.Li(f"Subgrupo {i+1}: {'R' if chart_type == 'XR' else 'S'} = {(ranges[i] if chart_type == 'XR' else stds[i]):.4f}", 
+                               style={'color': colors['text_primary'], 'marginBottom': '5px', 'fontSize': '14px'}) 
+                        for i in (fuera_control_r if chart_type == 'XR' else fuera_control_s)
+                    ], style={'paddingLeft': '20px'}) if len(fuera_control_r if chart_type == 'XR' else fuera_control_s) > 0 
+                    else html.P("✓ Todos los puntos bajo control", style={'color': colors['success'], 'fontWeight': '600', 'paddingLeft': '20px'})
+                ])
             ], style={'padding': '20px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px', 'marginBottom': '30px'})
         ]),
         
         html.Div([
-            html.Div("PATRONES ANORMALES", style={'fontSize': '12px', 'fontWeight': '700', 'color': colors['text_secondary'], 'letterSpacing': '1px', 'marginBottom': '12px'}),
+            html.Div("PATRONES ANORMALES", style={'fontSize': '12px', 'fontWeight': '700', 'color': colors['text_secondary'], 'letterSpacing': '1px', 'marginBottom': '15px'}),
             html.Div(style={
                 'display': 'inline-flex',
                 'alignItems': 'center',
@@ -991,47 +1276,71 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
                 'border': f'1px solid {colors["warning"] if len(violaciones_patrones) > 0 else colors["success"]}'
             }, children=[
                 html.Span(f"{len(violaciones_patrones)}", style={'fontSize': '32px', 'fontWeight': '700', 'color': colors['warning'] if len(violaciones_patrones) > 0 else colors['success']}),
-                html.Span("patrones", style={'fontSize': '14px', 'fontWeight': '600', 'color': colors['text_secondary']})
+                html.Span("patrones detectados", style={'fontSize': '14px', 'fontWeight': '600', 'color': colors['text_secondary']})
             ]),
             
             html.Div([
                 html.Ul([
-                    html.Li(v, style={'color': colors['text_primary'], 'marginBottom': '8px', 'fontSize': '14px', 'fontWeight': '500'}) 
+                    html.Li(v, style={'color': colors['text_primary'], 'marginBottom': '10px', 'fontSize': '14px', 'lineHeight': '1.6'}) 
                     for v in violaciones_patrones
-                ], style={'paddingLeft': '20px', 'margin': '0'}) if len(violaciones_patrones) > 0 
-                else html.P("No se detectaron patrones anormales en los datos", 
-                           style={'color': colors['success'], 'fontWeight': '600', 'fontSize': '15px', 'margin': '0'})
+                ], style={'paddingLeft': '20px'}) if len(violaciones_patrones) > 0 
+                else html.P("✓ No se detectaron patrones anormales", style={'color': colors['success'], 'fontWeight': '600', 'fontSize': '15px'})
             ], style={'padding': '20px', 'backgroundColor': '#FAFAFA', 'borderRadius': '6px'})
         ])
     ])
 
-    # Recomendaciones profesionales
+    # Recomendaciones mejoradas
     recomendaciones_lista = []
     
     if num_fuera_control > 0:
         recomendaciones_lista.extend([
-            "Investigar causas especiales en los puntos fuera de control identificados",
-            "Revisar y verificar la calibración de los equipos de medición",
-            "Verificar si hubo cambios en el operador o en el método de trabajo",
-            "Inspeccionar la calidad y consistencia de la materia prima",
-            "Revisar las condiciones ambientales del proceso"
+            "🔍 Investigar causas especiales en puntos fuera de límites",
+            "⚙️ Verificar calibración de equipos de medición",
+            "👤 Revisar cambios en operadores o métodos",
+            "📦 Inspeccionar calidad de materia prima",
+            "🌡️ Evaluar condiciones ambientales"
         ])
     
     if len(violaciones_patrones) > 0:
-        recomendaciones_lista.append("Analizar los patrones detectados para identificar causas asignables")
-        if any("Regla 5" in v for v in violaciones_patrones):
-            recomendaciones_lista.append("Tendencia detectada: verificar desgaste de herramientas o deriva del proceso")
-        if any("Regla 4" in v for v in violaciones_patrones):
-            recomendaciones_lista.append("Sesgo detectado: verificar ajustes y centrado del proceso")
+        tiene_r1 = any("Regla 1" in v for v in violaciones_patrones)
+        tiene_r2 = any("Regla 2" in v for v in violaciones_patrones)
+        tiene_r3 = any("Regla 3" in v for v in violaciones_patrones)
+        tiene_r4 = any("Regla 4" in v for v in violaciones_patrones)
+        tiene_r5 = any("Regla 5" in v for v in violaciones_patrones)
+        
+        if tiene_r1:
+            recomendaciones_lista.append("⚡ Regla 1: Evento extremo - Buscar causa asignable inmediata")
+        if tiene_r2:
+            recomendaciones_lista.append("📊 Regla 2: Variación excesiva - Revisar estabilidad")
+        if tiene_r3:
+            recomendaciones_lista.append("🎯 Regla 3: Desviación sostenida - Verificar ajustes")
+        if tiene_r4:
+            recomendaciones_lista.append("↕️ Regla 4: Sesgo detectado - Verificar centrado")
+        if tiene_r5:
+            recomendaciones_lista.append("📈 Regla 5: Tendencia continua - Verificar desgaste de herramientas")
     
-    if capacidad and capacidad['Cp'] < 1.33:
-        recomendaciones_lista.extend([
-            "La capacidad del proceso es inadecuada: implementar acciones para reducir la variación",
-            "Considerar metodologías de mejora continua (Six Sigma, Lean Manufacturing)"
-        ])
+    if capacidad and capacidad['tiene_limites']:
+        if capacidad['Cpk'] < 1.0:
+            recomendaciones_lista.extend([
+                "🚨 Cpk < 1.0: Proceso inadecuado - Acción urgente",
+                "🔧 Reducir variación o ampliar especificaciones"
+            ])
+        elif capacidad['Cpk'] < 1.33:
+            recomendaciones_lista.append("⚠️ Cpk marginal: Implementar mejora continua")
+        
+        if capacidad['Ppk'] < capacidad['Cpk']:
+            recomendaciones_lista.append("📉 Ppk < Cpk: Variación entre subgrupos alta - Revisar consistencia del proceso")
+        
+        if abs(capacidad['Cpu'] - capacidad['Cpl']) > 0.2:
+            recomendaciones_lista.append("⚖️ Proceso descentrado - Ajustar hacia valor nominal")
     
     if len(recomendaciones_lista) == 0:
-        recomendaciones_lista.append("El proceso se encuentra estable y capaz. Mantener el monitoreo continuo y las condiciones actuales")
+        recomendaciones_lista.extend([
+            "✅ Proceso estable y bajo control",
+            "📊 Mantener monitoreo continuo",
+            "📝 Documentar condiciones como estándar",
+            "🔄 Auditorías periódicas preventivas"
+        ])
     
     recomendaciones_html = html.Div(style={
         'backgroundColor': colors['bg_card'],
@@ -1041,24 +1350,21 @@ def update_graph(n_clicks, contents, filename, manual_data, method, chart_type, 
         'borderLeft': f'5px solid {colors["accent_gold"]}',
         'boxShadow': f'0 4px 12px {colors["shadow"]}'
     }, children=[
-        html.Div(style={'marginBottom': '25px'}, children=[
-            html.H4("Recomendaciones", style={
-                'color': colors['text_primary'],
-                'margin': '0',
-                'fontSize': '24px',
-                'fontWeight': '700'
-            })
-        ]),
+        html.H4("Recomendaciones", style={
+            'color': colors['text_primary'],
+            'margin': '0 0 25px 0',
+            'fontSize': '24px',
+            'fontWeight': '700'
+        }),
         html.Ul([
             html.Li(rec, style={
                 'color': colors['text_primary'],
                 'marginBottom': '12px',
                 'fontSize': '15px',
-                'fontWeight': '500',
-                'lineHeight': '1.6'
+                'lineHeight': '1.7'
             }) 
             for rec in recomendaciones_lista
-        ], style={'paddingLeft': '25px', 'margin': '0'})
+        ], style={'paddingLeft': '25px'})
     ])
 
     return (fig_xbar, fig_rs, alerta_texto, alerta_style, estadisticas_html, 
